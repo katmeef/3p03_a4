@@ -665,11 +665,11 @@ Here is a simple example. Consider the graph below, with source vertex $s$.
     \draw (a) -- (b);
 
     % weights
-    \node[text=red] at (1.4,2.45) {1};
-    \node[text=red] at (1.4,0.55) {2};
-    \node[text=red] at (4.6,2.45) {10};
-    \node[text=red] at (4.6,0.55) {2};
-    \node[text=red] at (3,1.75) {1};
+    \node[text=red] at (1.4,2.45) {2};
+    \node[text=red] at (1.4,0.55) {4};
+    \node[text=red] at (4.6,2.45) {20};
+    \node[text=red] at (4.6,0.55) {4};
+    \node[text=red] at (3,1.75) {3};
 \end{tikzpicture}
 \caption{A graph where the shortest-path tree and the MST are different.}
 \label{fig:q4c-example}
@@ -677,15 +677,15 @@ Here is a simple example. Consider the graph below, with source vertex $s$.
 
 If we run Dijkstra's algorithm from source $s$, we get:
 \[
-d(s,a)=1, \qquad d(s,b)=2, \qquad d(s,c)=4.
+d(s,a)=2, \qquad d(s,b)=4, \qquad d(s,c)=8.
 \]
-So one shortest-path tree is
+The direct edge $sb$ has weight $4$, while the alternative path $s \to a \to b$ has weight $2+3=5$, so Dijkstra chooses $sb$ rather than going through $a$ when reaching $b$. Therefore one shortest-path tree is
 \[
 T_D = \{sa,\ sb,\ bc\}.
 \]
 This tree has total weight
 \[
-1+2+2=5.
+2+4+4=10.
 \]
 
 We can draw this shortest-path tree separately as follows:
@@ -705,9 +705,9 @@ We can draw this shortest-path tree separately as follows:
     \draw[thick] (b) -- (c);
 
     % weights
-    \node[text=red] at (1.4,2.45) {1};
-    \node[text=red] at (1.4,0.55) {2};
-    \node[text=red] at (4.6,0.55) {2};
+    \node[text=red] at (1.4,2.45) {2};
+    \node[text=red] at (1.4,0.55) {4};
+    \node[text=red] at (4.6,0.55) {4};
 \end{tikzpicture}
 \caption{The shortest-path tree produced by Dijkstra's algorithm from source $s$.}
 \label{fig:q4c-dijkstra-tree}
@@ -723,7 +723,7 @@ T_M = \{ab,\ sa,\ bc\}.
 \]
 Its total weight is
 \[
-1+1+2=4.
+3+2+4=9.
 \]
 
 We can also draw the MST separately:
@@ -743,9 +743,9 @@ We can also draw the MST separately:
     \draw[thick] (b) -- (c);
 
     % weights
-    \node[text=red] at (3,1.75) {1};
-    \node[text=red] at (1.4,2.45) {1};
-    \node[text=red] at (4.6,0.55) {2};
+    \node[text=red] at (3,1.75) {3};
+    \node[text=red] at (1.4,2.45) {2};
+    \node[text=red] at (4.6,0.55) {4};
 \end{tikzpicture}
 \caption{A minimum spanning tree of the same graph.}
 \label{fig:q4c-mst-tree}
