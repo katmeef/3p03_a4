@@ -762,7 +762,100 @@ T_M = \{ab,\ sa,\ bc\},
 so the two trees are different.
 
 \newpage
+
 \section*{Answer to Question 5.}
+
+\subsection*{(a)}
+
+Memoization is a technique where we store the answers to subproblems after computing them once, so that if the same subproblem comes up again we can reuse the stored answer instead of recomputing it. In dynamic programming, this saves time because many recursive subproblems repeat.
+
+\subsection*{(b)}
+
+A subsequence is a sequence of characters that appears in the same relative order as in the original string, but not necessarily next to each other.
+
+For example, in the string
+\[
+\texttt{ABCDE}
+\]
+the sequence
+\[
+\texttt{ACE}
+\]
+is a subsequence, because we keep the order $A \to C \to E$, even though the letters are not consecutive.
+
+A substring is different because the characters must be consecutive. For example,
+\[
+\texttt{BCD}
+\]
+is a substring of \texttt{ABCDE}, but
+\[
+\texttt{ACE}
+\]
+is not a substring.
+
+So the difference is:
+\begin{itemize}
+    \item a \textbf{subsequence} keeps the same order, but may skip characters;
+    \item a \textbf{substring} must be a continuous block of characters.
+\end{itemize}
+
+\subsection*{(c)}
+
+Let
+\[
+X = \texttt{ABFFSDERW}
+\]
+and
+\[
+Y = \texttt{WFDFTRESAWE}.
+\]
+
+We use dynamic programming. Let $L[i,j]$ denote the length of the LCS of the first $i$ characters of $X$ and the first $j$ characters of $Y$.
+
+The recurrence is:
+\[
+L[i,j] =
+\begin{cases}
+0 & \text{if } i=0 \text{ or } j=0,\\[4pt]
+L[i-1,j-1]+1 & \text{if } X_i = Y_j,\\[4pt]
+\max\{L[i-1,j],L[i,j-1]\} & \text{if } X_i \ne Y_j.
+\end{cases}
+\]
+
+Filling in the dynamic programming table gives:
+
+\[
+\begin{array}{c|cccccccccccc}
+ & \varnothing & W & F & D & F & T & R & E & S & A & W & E \\
+\hline
+\varnothing & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+A & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 1 & 1 & 1 \\
+B & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 1 & 1 & 1 \\
+F & 0 & 0 & 1 & 1 & 1 & 1 & 1 & 1 & 1 & 1 & 1 & 1 \\
+F & 0 & 0 & 1 & 1 & 2 & 2 & 2 & 2 & 2 & 2 & 2 & 2 \\
+S & 0 & 0 & 1 & 1 & 2 & 2 & 2 & 2 & 3 & 3 & 3 & 3 \\
+D & 0 & 0 & 1 & 2 & 2 & 2 & 2 & 2 & 3 & 3 & 3 & 3 \\
+E & 0 & 0 & 1 & 2 & 2 & 2 & 2 & 3 & 3 & 3 & 3 & 4 \\
+R & 0 & 0 & 1 & 2 & 2 & 2 & 3 & 3 & 3 & 3 & 3 & 4 \\
+W & 0 & 1 & 1 & 2 & 2 & 2 & 3 & 3 & 3 & 3 & 4 & 4 \\
+\end{array}
+\]
+
+The final entry is $L[9,11] = 4$, so the length of the LCS is 4.
+
+Backtracking through the table gives one longest common subsequence:
+\[
+\texttt{FFSE}.
+\]
+
+Therefore, the LCS of \texttt{ABFFSDERW} and \texttt{WFDFTRESAWE} is
+\[
+\boxed{\texttt{FFSE}}
+\]
+with length
+\[
+\boxed{4}.
+\]
 
 \newpage
 \bibliographystyle{unsrt}
