@@ -773,7 +773,9 @@ then one shortest-path tree from $s$ is $\{sa,ab,bc\}$, and this is also an MST.
 
 \subsection*{(a)}
 
-Memoization is a technique where we store the answers to subproblems after computing them once, so that if the same subproblem comes up again we can reuse the stored answer instead of recomputing it. In dynamic programming, this saves time because many recursive subproblems repeat.
+Memoization is a technique where we store the answers to recursive subproblems after computing them once, so that if the same subproblem appears again we can reuse the stored result instead of recomputing it. In this approach we still write the algorithm recursively, but we remember previously solved subproblems so that repeated work is avoided. This is often described as a \emph{top-down} approach.
+
+Dynamic programming is closely related, but it is usually presented as a \emph{bottom-up} approach. Instead of starting with recursion, we systematically fill in a table of solutions to smaller subproblems and build up to the final answer. Both methods rely on solving overlapping subproblems and reusing previously computed results, but memoization stores results during recursion, while dynamic programming typically computes them iteratively in a table.
 
 \subsection*{(b)}
 
