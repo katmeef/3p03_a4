@@ -642,8 +642,7 @@ Therefore, our assumption was false. So a graph with unique edge weights must ha
 
 \subsection*{(c)}
 
-Yes, Dijkstra's algorithm produces a tree if we record for each vertex the edge through which it was first reached with minimum distance from the source \cite{bari_dijkstra}. This resulting tree is called a \emph{shortest-path tree}. However, it is not necessarily a minimum spanning tree.
-The reason is that Dijkstra's algorithm and MST algorithms are solving different problems. Dijkstra's algorithm tries to minimize the distance from one chosen source vertex to every other vertex. In contrast, an MST tries to minimize the total weight of all edges in the tree. Those are different goals, so the resulting trees do not always match.
+Yes, Dijkstra's algorithm does produce a tree. The algorithm starts from a chosen source vertex and repeatedly selects the vertex with the smallest known distance from the source, updating distances to its neighbors as shorter paths are discovered \cite{bari_dijkstra}. If we record, for each vertex, the edge through which it was first permanently reached with minimum distance, these edges form a tree called a \emph{shortest-path tree}. However, this tree is not necessarily a minimum spanning tree.
 
 Here is a simple example. Consider the graph below, with source vertex $s$.
 
@@ -852,13 +851,13 @@ To recover an actual longest common subsequence, we backtrack from the bottom-ri
 
 Starting at $(9,11)$, which is the bottom-right corner of the table (row $W$, column $E$), the value is $4$. Since the last characters are $W$ and $E$, they do not match, so we move to a neighboring cell with the same value. Moving left takes us to $(9,10)$, where the characters are $W$ and $W$, so they match. Therefore, $W$ is part of an LCS, and we move diagonally to $(8,9)$.
 
-At $(8,9)$, the characters are $R$ and $A$, so they do not match. We again move to a neighboring cell with the same value. Continuing this process and recording matched characters eventually produces one longest common subsequence.
+At $(8,9)$, the characters are $R$ and $A$, so they do not match. We again move to a neighboring cell with the same value. Continuing this process and recording matched characters gives one longest common subsequence.
 
-During backtracking it can happen that the cell above and the cell to the left have the same value. When this occurs, we may move in either direction without changing the LCS length. For example, from a cell with value $3$ we might move left several times (left–left–left) or move up several times (up–up–up) as long as the values remain the same. Each different sequence of choices can lead to a different longest common subsequence.
+During backtracking it can happen that the cell above and the cell to the left have the same value. When this occurs, we may move in either direction without changing the LCS length. For example, from a cell with value $3$ we might move left or move up as long as the values remain the same. Each different sequence of choices can lead to a different longest common subsequence.
 
 Because of these ties in the table, the LCS is not unique in this example. One valid backtracking path gives $\texttt{FDEW}$, but other valid backtracking choices produce different longest common subsequences of the same length.
 
-For example, some longest common subsequences are
+For example, several longest common subsequences are
 \[
 \texttt{FDEW},\quad \texttt{FDRW},\quad \texttt{FFEW},\quad \texttt{FFRW},\quad \texttt{FFSE},\quad \texttt{FFSW}.
 \]
