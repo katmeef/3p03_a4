@@ -1,7 +1,3 @@
-
-
-from __future__ import annotations
-
 import math
 import os
 import sys
@@ -10,7 +6,6 @@ from typing import List, Optional, Sequence, Tuple
 INF = math.inf
 
 Edge = Tuple[int, int, int]
-
 
 def read_input_file_MattKeith(path: str) -> Tuple[int, List[List[int]]]:
     # read adjacency matrix from the input file
