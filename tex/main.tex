@@ -638,12 +638,11 @@ If we remove $f$ from $T_2 \cup \{e\}$, we get another spanning tree. Its total 
 
 But this is impossible, since $T_2$ was assumed to be a minimum spanning tree.
 
-Therefore our assumption was false. So a graph with unique edge weights must have a unique minimum spanning tree.
+Therefore, our assumption was false. So a graph with unique edge weights must have a unique minimum spanning tree.
 
 \subsection*{(c)}
 
 Yes, Dijkstra's algorithm produces a tree if we record for each vertex the edge through which it was first reached with minimum distance from the source \cite{bari_dijkstra}. This resulting tree is called a \emph{shortest-path tree}. However, it is not necessarily a minimum spanning tree.
-
 The reason is that Dijkstra's algorithm and MST algorithms are solving different problems. Dijkstra's algorithm tries to minimize the distance from one chosen source vertex to every other vertex. In contrast, an MST tries to minimize the total weight of all edges in the tree. Those are different goals, so the resulting trees do not always match.
 
 Here is a simple example. Consider the graph below, with source vertex $s$.
