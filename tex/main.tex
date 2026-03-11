@@ -774,8 +774,6 @@ then one shortest-path tree from $s$ is $\{sa,ab,bc\}$, and this is also an MST.
 
 Memoization is a technique where we store the answers to recursive subproblems after computing them once, so that if the same subproblem appears again we can reuse the stored result instead of recomputing it. In this approach we still write the algorithm recursively, but we remember previously solved subproblems so that repeated work is avoided. This is often described as a \emph{top-down} approach.
 
-Dynamic programming is closely related, but it is usually presented as a \emph{bottom-up} approach. Instead of starting with recursion, we systematically fill in a table of solutions to smaller subproblems and build up to the final answer. Both methods rely on solving overlapping subproblems and reusing previously computed results, but memoization stores results during recursion, while dynamic programming typically computes them iteratively in a table.
-
 \subsection*{(b)}
 
 A subsequence is a sequence of characters that appears in the same relative order as in the original string, but not necessarily next to each other.
@@ -828,37 +826,43 @@ The dynamic programming rule for filling the table is:
 \]
 This is the same if/else rule used in Abdul Bari's explanation of LCS \cite{bari_lcs}.
 
-Filling in the dynamic programming table gives:
+Filling in the dynamic programming table gives the following values. The row numbers $1$ through $9$ correspond to the letters of $X=\texttt{ABFFSDERW}$, and the column numbers $1$ through $11$ correspond to the letters of $Y=\texttt{WFDFTRESAWE}$:
 
 \[
-\begin{array}{c|cccccccccccc}
- & \varnothing & W & F & D & F & T & R & E & S & A & W & E \\
+\begin{array}{cc|cccccccccccc}
+ & & 0 & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 & 9 & 10 & 11 \\
+ & & \varnothing & W & F & D & F & T & R & E & S & A & W & E \\
 \hline
-\varnothing & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
-A & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 1 & 1 & 1 \\
-B & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 1 & 1 & 1 \\
-F & 0 & 0 & 1 & 1 & 1 & 1 & 1 & 1 & 1 & 1 & 1 & 1 \\
-F & 0 & 0 & 1 & 1 & 2 & 2 & 2 & 2 & 2 & 2 & 2 & 2 \\
-S & 0 & 0 & 1 & 1 & 2 & 2 & 2 & 2 & 3 & 3 & 3 & 3 \\
-D & 0 & 0 & 1 & 2 & 2 & 2 & 2 & 2 & 3 & 3 & 3 & 3 \\
-E & 0 & 0 & 1 & 2 & 2 & 2 & 2 & 3 & 3 & 3 & 3 & 4 \\
-R & 0 & 0 & 1 & 2 & 2 & 2 & 3 & 3 & 3 & 3 & 3 & 4 \\
-W & 0 & 1 & 1 & 2 & 2 & 2 & 3 & 3 & 3 & 3 & 4 & 4 \\
+0 & \varnothing & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+1 & A & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 1 & 1 & 1 \\
+2 & B & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 1 & 1 & 1 \\
+3 & F & 0 & 0 & 1 & 1 & 1 & 1 & 1 & 1 & 1 & 1 & 1 & 1 \\
+4 & F & 0 & 0 & 1 & 1 & 2 & 2 & 2 & 2 & 2 & 2 & 2 & 2 \\
+5 & S & 0 & 0 & 1 & 1 & 2 & 2 & 2 & 2 & 3 & 3 & 3 & 3 \\
+6 & D & 0 & 0 & 1 & 2 & 2 & 2 & 2 & 2 & 3 & 3 & 3 & 3 \\
+7 & E & 0 & 0 & 1 & 2 & 2 & 2 & 2 & 3 & 3 & 3 & 3 & 4 \\
+8 & R & 0 & 0 & 1 & 2 & 2 & 2 & 3 & 3 & 3 & 3 & 3 & 4 \\
+9 & W & 0 & 1 & 1 & 2 & 2 & 2 & 3 & 3 & 3 & 3 & 4 & 4 \\
 \end{array}
 \]
 
 The final entry is $L[9,11] = 4$, so the length of the LCS is 4.
 
-Backtracking through the table gives one longest common subsequence:
-\[
-\texttt{FFSE}.
-\]
+To recover an actual longest common subsequence, we backtrack from the bottom-right corner of the table.
 
-Therefore, the LCS of \texttt{ABFFSDERW} and \texttt{WFDFTRESAWE} is
+Starting at $(9,11)$, which is the bottom-right corner of the table (row $W$, column $E$), the value is $4$. Since the last characters are $W$ and $E$, they do not match, so we move to a neighboring cell with the same value. Moving left takes us to $(9,10)$, where the characters are $W$ and $W$, so they match. Therefore, $W$ is part of an LCS, and we move diagonally to $(8,9)$.
+
+At $(8,9)$, the characters are $R$ and $A$, so they do not match. We again move to a neighboring cell with the same value. Continuing this process and recording matched characters eventually produces one longest common subsequence.
+
+During backtracking it can happen that the cell above and the cell to the left have the same value. When this occurs, we may move in either direction without changing the LCS length. For example, from a cell with value $3$ we might move left several times (left–left–left) or move up several times (up–up–up) as long as the values remain the same. Each different sequence of choices can lead to a different longest common subsequence.
+
+Because of these ties in the table, the LCS is not unique in this example. One valid backtracking path gives $\texttt{FDEW}$, but other valid backtracking choices produce different longest common subsequences of the same length.
+
+For example, some longest common subsequences are
 \[
-\boxed{\texttt{FFSE}}
+\texttt{FDEW},\quad \texttt{FDRW},\quad \texttt{FFEW},\quad \texttt{FFRW},\quad \texttt{FFSE},\quad \texttt{FFSW}.
 \]
-with length
+Each of these subsequences has length
 \[
 \boxed{4}.
 \]
