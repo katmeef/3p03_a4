@@ -642,7 +642,7 @@ Therefore our assumption was false. So a graph with unique edge weights must hav
 
 \subsection*{(c)}
 
-Yes, Dijkstra's algorithm does give a tree, provided we record for each vertex the edge through which it was first permanently reached with minimum distance from the source. That tree is called a \emph{shortest-path tree}. However, it is not necessarily a minimum spanning tree.
+Yes, Dijkstra's algorithm produces a tree if we record for each vertex the edge through which it was first reached with minimum distance from the source \cite{bari_dijkstra}. This resulting tree is called a \emph{shortest-path tree}. However, it is not necessarily a minimum spanning tree.
 
 The reason is that Dijkstra's algorithm and MST algorithms are solving different problems. Dijkstra's algorithm tries to minimize the distance from one chosen source vertex to every other vertex. In contrast, an MST tries to minimize the total weight of all edges in the tree. Those are different goals, so the resulting trees do not always match.
 
@@ -820,15 +820,14 @@ Y = \texttt{WFDFTRESAWE}.
 
 We use dynamic programming. Let $L[i,j]$ denote the length of the LCS of the first $i$ characters of $X$ and the first $j$ characters of $Y$.
 
-The recurrence is:
+The dynamic programming rule for filling the table is:
 \[
-L[i,j] =
-\begin{cases}
-0 & \text{if } i=0 \text{ or } j=0,\\[4pt]
-L[i-1,j-1]+1 & \text{if } X_i = Y_j,\\[4pt]
-\max\{L[i-1,j],L[i,j-1]\} & \text{if } X_i \ne Y_j.
-\end{cases}
+\text{if } X_i = Y_j, \text{ then } L[i,j] = 1 + L[i-1,j-1]
 \]
+\[
+\text{else } L[i,j] = \max\{L[i-1,j], L[i,j-1]\}
+\]
+This is the same if/else rule used in Abdul Bari's explanation of LCS \cite{bari_lcs}.
 
 Filling in the dynamic programming table gives:
 
