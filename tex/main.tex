@@ -713,7 +713,7 @@ We can draw this shortest-path tree separately as follows:
 \label{fig:q4c-dijkstra-tree}
 \end{figure}
 
-Now consider the MST of the same graph. The three lightest edges that connect all four vertices without creating a cycle are
+Now consider the MST of the same graph. An MST is obtained by choosing the edges
 \[
 ab,\ sa,\ bc.
 \]
@@ -760,6 +760,12 @@ and
 T_M = \{ab,\ sa,\ bc\},
 \]
 so the two trees are different.
+
+In some graphs, the shortest-path tree and the MST may happen to be the same. For example, if a graph has edges
+\[
+sa=1,\quad sb=2,\quad ab=1,\quad bc=2,\quad ac=10,
+\]
+then one shortest-path tree from $s$ is $\{sa,ab,bc\}$, and this is also an MST. However, as the example above shows, Dijkstra's algorithm does not guarantee that this will happen.
 
 \newpage
 
