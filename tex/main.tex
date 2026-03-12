@@ -409,7 +409,6 @@ remaining pairs causes no further changes until the stack becomes empty.
     \draw (s) -- (t);
     \draw (s) to[out=210,in=110] (f);
     \draw (s) to[out=328,in=164] (e);
-    \draw (s) to[out=334,in=155] (q);
 
     \draw (f) to[out=30,in=205] (q);
     \draw (f) -- (p);
@@ -433,7 +432,6 @@ remaining pairs causes no further changes until the stack becomes empty.
     \node[text=red] at (2.05,3.95) {2};   % s-t
     \node[text=red] at (-1.05,2.0) {2};   % s-f
     \node[text=red] at (1.10,2.95) {7};   % s-e
-    \node[text=red] at (2.25,2.72) {7};   % s-q
     \node[text=red] at (1.15,1.8) {3};    % f-q
     \node[text=red] at (0.65,0.55) {4};   % f-p
     \node[text=red] at (-0.15,-0.7) {7};  % f-b
@@ -459,7 +457,7 @@ Using Kruskal's algorithm, we sort the edges of $G_{mst}$ by nondecreasing weigh
 
 The edges in increasing order of weight are:
 \[
-2: \ st,\ sf,\ qe,\ te
+2: \ st,\ sf,\ eq,\ te
 \]
 \[
 3: \ fq,\ qt
@@ -471,7 +469,7 @@ The edges in increasing order of weight are:
 5: \ pd
 \]
 \[
-7: \ sq,\ se,\ fb,\ pe,\ bd,\ qd
+7: \ se,\ fb,\ pe,\ bd,\ qd
 \]
 \[
 8: \ de
@@ -483,7 +481,7 @@ Now we apply Kruskal's algorithm step by step.
 
 \textbf{Step 2:} Add $sf$ (weight $2$).
 
-\textbf{Step 3:} Add $qe$ (weight $2$).
+\textbf{Step 3:} Add $eq$ (weight $2$).
 
 \textbf{Step 4:} Add $te$ (weight $2$).
 
@@ -501,7 +499,7 @@ At this point the vertices $s,t,f,q,e$ are all in the same connected component.
 
 Now the tree contains $7$ edges and all $8$ vertices are connected, so we have obtained an MST. Therefore,
 \[
-T_k = \{st,\ sf,\ qe,\ te,\ fp,\ pb,\ pd\}.
+T_k = \{st,\ sf,\ eq,\ te,\ fp,\ pb,\ pd\}.
 \]
 The total weight is
 \[
@@ -541,7 +539,7 @@ The total weight is again
 
 Yes. The two trees are the same, since they contain exactly the same set of edges from the original graph:
 \[
-T_k = T_p = \{st,\ sf,\ qe,\ te,\ fp,\ pb,\ pd\}.
+T_k = T_p = \{st,\ sf,\ eq,\ te,\ fp,\ pb,\ pd\}.
 \]
 So Kruskal's algorithm and Jarn\'ik's (Prim's) algorithm produce the same MST for this graph.
 
@@ -642,7 +640,7 @@ Therefore, our assumption was false. So a graph with unique edge weights must ha
 
 \subsection*{(c)}
 
-Yes, Dijkstra's algorithm does produce a tree. The algorithm starts from a chosen source vertex and repeatedly selects the vertex with the smallest known distance from the source, updating distances to its neighbors as shorter paths are discovered \cite{bari_dijkstra}. If we record, for each vertex, the edge through which it was first permanently reached with minimum distance, these edges form a tree called a \emph{shortest-path tree}. However, this tree is not necessarily a minimum spanning tree.
+Yes, Dijkstra's algorithm does produce a tree. The algorithm starts from a chosen source vertex and repeatedly selects the vertex with the smallest known distance from the source, updating distances to its neighbors as shorter paths are discovered. If we record, for each vertex, the edge through which it was first permanently reached with minimum distance, these edges form a tree called a \emph{shortest-path tree}. However, this tree is not necessarily a minimum spanning tree.
 
 Here is a simple example. Consider the graph below, with source vertex $s$.
 
@@ -771,7 +769,7 @@ then one shortest-path tree from $s$ is $\{sa,ab,bc\}$, and this is also an MST.
 
 \subsection*{(a)}
 
-Memoization is a technique where we store the answers to recursive subproblems after computing them once, so that if the same subproblem appears again we can reuse the stored result instead of recomputing it. In this approach we still write the algorithm recursively, but we remember previously solved subproblems so that repeated work is avoided. This is often described as a \emph{top-down} approach.
+Memoization is a top-down form of dynamic programming where we store the answers to recursive subproblems after computing them once, so that if the same subproblem appears again we can reuse the stored result instead of recomputing it. In this approach we still write the algorithm recursively, but we remember previously solved subproblems so that repeated work is avoided.
 
 \subsection*{(b)}
 

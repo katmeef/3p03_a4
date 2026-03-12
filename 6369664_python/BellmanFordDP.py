@@ -9,8 +9,6 @@ Edge = Tuple[int, int, int]
 
 def read_input_file_MattKeith(path: str) -> Tuple[int, List[List[int]]]:
     # read adjacency matrix from the input file
-    # first line is n, then n rows of numbers
-    # each row should have n integers
     with open(path, "r", encoding="utf-8") as infile:
         lines = [line.strip() for line in infile if line.strip()]
 
@@ -34,7 +32,6 @@ def read_input_file_MattKeith(path: str) -> Tuple[int, List[List[int]]]:
 
     return n, matrix
 
-
 def matrix_to_edges_MattKeith(matrix: List[List[int]]) -> List[Edge]:
     # convert the matrix into an edge list
     # skip diagonal entries and treat 0 as "no edge"
@@ -48,7 +45,6 @@ def matrix_to_edges_MattKeith(matrix: List[List[int]]) -> List[Edge]:
             if weight != 0:
                 edges.append((u, v, weight))
     return edges
-
 
 def bellman_ford_final_MattKeith(n: int, edges: List[Edge], source: int = 0) -> Tuple[bool, List[float], List[Optional[int]]]:
     # run the standard Bellman‑Ford algorithm
@@ -67,14 +63,12 @@ def bellman_ford_final_MattKeith(n: int, edges: List[Edge], source: int = 0) -> 
                 updated = True
         if not updated:
             break
-
     # One additional pass to detect a reachable negative cycle.
     for u, v, weight in edges:
         if dist[u] != INF and dist[v] > dist[u] + weight:
             return True, dist, pred
 
     return False, dist, pred
-
 
 def reconstruct_path_MattKeith(pred: List[Optional[int]], source: int, target: int) -> List[int]:
     # rebuild the path from source to target using the pred array
@@ -86,9 +80,6 @@ def reconstruct_path_MattKeith(pred: List[Optional[int]], source: int, target: i
     seen = set()
 
     while current is not None:
-        if current in seen:
-            # Defensive guard against malformed predecessor chains.
-            return []
         seen.add(current)
         path.append(current)
         if current == source:
@@ -97,7 +88,6 @@ def reconstruct_path_MattKeith(pred: List[Optional[int]], source: int, target: i
         current = pred[current]
 
     return []
-
 
 def format_output_MattKeith(n: int, has_negative_cycle: bool, dist: List[float], pred: List[Optional[int]], source: int = 0) -> str:
     # format the output the same way the assignment examples show
@@ -114,13 +104,11 @@ def format_output_MattKeith(n: int, has_negative_cycle: bool, dist: List[float],
         lines.append(f"{vertex}, {distance_value}, {path}")
     return "\n".join(lines)
 
-
 def output_path_for_input_MattKeith(input_path: str) -> str:
     # build the output filename inside the outputs/ folder
     os.makedirs("outputs", exist_ok=True)
     base_name = os.path.basename(input_path)
     return os.path.join("outputs", f"output_{base_name}")
-
 
 def solve_file_MattKeith(input_path: str, source: int = 0) -> str:
     # run Bellman‑Ford on one input file and write the output
@@ -136,9 +124,7 @@ def solve_file_MattKeith(input_path: str, source: int = 0) -> str:
 
     return output_text
 
-
 def main(argv: Optional[Sequence[str]] = None) -> int:
-    # main entry point the marking script will call
     # usage: python BellmanFordDP.py file1 file2 ...
     if argv is None:
         argv = sys.argv[1:]
@@ -155,7 +141,6 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
             return 1
 
     return 0
-
 
 if __name__ == "__main__":
     raise SystemExit(main())
