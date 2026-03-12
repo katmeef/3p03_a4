@@ -803,23 +803,20 @@ So the difference is:
 
 \subsection*{(c)}
 
-Let
-\[
-X = \texttt{ABFFSDERW}
-\]
-and
-\[
-Y = \texttt{WFDFTRESAWE}.
-\]
+\begin{gather*}
+    X = \texttt{ABFFSDERW}\\
+    Y = \texttt{WFDFTRESAWE}.\\
+\end{gather*}
 
 We use dynamic programming. Let $L[i,j]$ denote the length of the LCS of the first $i$ characters of $X$ and the first $j$ characters of $Y$.
 
+The base cases are $L[i,0]=0$ and $L[0,j]=0$ for all $i$ and $j$.
 The dynamic programming rule for filling the table is:
 \[
-\text{if } X_i = Y_j, \text{ then } L[i,j] = 1 + L[i-1,j-1]
-\]
-\[
-\text{else } L[i,j] = \max\{L[i-1,j], L[i,j-1]\}
+\begin{aligned}
+\text{if } X_i = Y_j, &\text{ then } L[i,j] = 1 + L[i-1,j-1],\\
+\text{else } &L[i,j] = \max\{L[i-1,j], L[i,j-1]\}.
+\end{aligned}
 \]
 This is the same if/else rule used in Abdul Bari's explanation of LCS \cite{bari_lcs}.
 
@@ -859,10 +856,7 @@ For example, several longest common subsequences are
 \[
 \texttt{FDEW},\quad \texttt{FDRW},\quad \texttt{FFEW},\quad \texttt{FFRW},\quad \texttt{FFSE},\quad \texttt{FFSW}.
 \]
-Each of these subsequences has length
-\[
-\boxed{4}.
-\]
+Each of these subsequences has length 4.
 
 \newpage
 \bibliographystyle{unsrt}
