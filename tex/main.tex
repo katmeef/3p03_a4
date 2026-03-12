@@ -814,8 +814,8 @@ The base cases are $L[i,0]=0$ and $L[0,j]=0$ for all $i$ and $j$.
 The dynamic programming rule for filling the table is:
 \[
 \begin{aligned}
-\text{if } X_i = Y_j, &\text{ then } L[i,j] = 1 + L[i-1,j-1],\\
-\text{else } &L[i,j] = \max\{L[i-1,j], L[i,j-1]\}.
+\text{if } X_i = Y_j \qquad & L[i,j] = 1 + L[i-1,j-1] \\
+\text{else} \qquad & L[i,j] = \max(L[i-1,j],\,L[i,j-1])
 \end{aligned}
 \]
 This is the same if/else rule used in Abdul Bari's explanation of LCS \cite{bari_lcs}.
