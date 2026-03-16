@@ -8,10 +8,10 @@
 \usepackage{amssymb}
 % Non-floating captions (for samepage compatibility)
 \usepackage{capt-of}
+\usepackage[table]{xcolor}
 % Hyperlink configuration
 \usepackage{hyperref}
 \hypersetup{hidelinks}
-
 % TikZ for graph drawings
 \usepackage{tikz}
 
@@ -810,8 +810,7 @@ So the difference is:
 
 We use dynamic programming. Let $L[i,j]$ denote the length of the LCS of the first $i$ characters of $X$ and the first $j$ characters of $Y$.
 
-The base cases are $L[i,0]=0$ and $L[0,j]=0$ for all $i$ and $j$.
-The dynamic programming rule for filling the table is:
+The base cases are $L[i,0]=0$ and $L[0,j]=0$ for all $i$ and $j$. The dynamic programming rule for filling the table is:
 \[
 \begin{aligned}
 \text{if } X_i = Y_j \qquad & L[i,j] = 1 + L[i-1,j-1] \\
@@ -820,43 +819,63 @@ The dynamic programming rule for filling the table is:
 \]
 This is the same if/else rule used in Abdul Bari's explanation of LCS \cite{bari_lcs}.
 
-Filling in the dynamic programming table gives the following values. The row numbers $1$ through $9$ correspond to the letters of $X=\texttt{ABFFSDERW}$, and the column numbers $1$ through $11$ correspond to the letters of $Y=\texttt{WFDFTRESAWE}$:
+Following the lecture slides, we include arrows in the table. In each non-base cell, $\nwarrow$ means the characters matched and we copied diagonally, $\uparrow$ means we copied the value from the cell above, and $\leftarrow$ means we copied the value from the cell to the left. In the case of a tie, we choose the upper cell, so we record an up arrow.
+
+The completed dynamic programming table is:
 
 \[
-\begin{array}{cc|cccccccccccc}
+\setlength{\arraycolsep}{3pt}
+\renewcommand{\arraystretch}{1.2}
+\begin{array}{cc|*{12}{c|}}
  & & 0 & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 & 9 & 10 & 11 \\
  & & \varnothing & W & F & D & F & T & R & E & S & A & W & E \\
 \hline
-0 & \varnothing & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
-1 & A & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 1 & 1 & 1 \\
-2 & B & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 1 & 1 & 1 \\
-3 & F & 0 & 0 & 1 & 1 & 1 & 1 & 1 & 1 & 1 & 1 & 1 & 1 \\
-4 & F & 0 & 0 & 1 & 1 & 2 & 2 & 2 & 2 & 2 & 2 & 2 & 2 \\
-5 & S & 0 & 0 & 1 & 1 & 2 & 2 & 2 & 2 & 3 & 3 & 3 & 3 \\
-6 & D & 0 & 0 & 1 & 2 & 2 & 2 & 2 & 2 & 3 & 3 & 3 & 3 \\
-7 & E & 0 & 0 & 1 & 2 & 2 & 2 & 2 & 3 & 3 & 3 & 3 & 4 \\
-8 & R & 0 & 0 & 1 & 2 & 2 & 2 & 3 & 3 & 3 & 3 & 3 & 4 \\
-9 & W & 0 & 1 & 1 & 2 & 2 & 2 & 3 & 3 & 3 & 3 & 4 & 4 \\
+0 & \varnothing & 0 & \cellcolor{cyan!25}0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+\hline
+1 & A & 0 & \cellcolor{cyan!25}0\uparrow & 0\uparrow & 0\uparrow & 0\uparrow & 0\uparrow & 0\uparrow & 0\uparrow & 0\uparrow & 1\nwarrow & 1\leftarrow & 1\leftarrow \\
+\hline
+2 & B & 0 & \cellcolor{cyan!25}0\uparrow & 0\uparrow & 0\uparrow & 0\uparrow & 0\uparrow & 0\uparrow & 0\uparrow & 0\uparrow & 1\uparrow & 1\uparrow & 1\uparrow \\
+\hline
+3 & F & 0 & 0\uparrow & \cellcolor{cyan!25}1\nwarrow & \cellcolor{cyan!25}1\leftarrow & 1\nwarrow & 1\leftarrow & 1\leftarrow & 1\leftarrow & 1\leftarrow & 1\uparrow & 1\uparrow & 1\uparrow \\
+\hline
+4 & F & 0 & 0\uparrow & 1\nwarrow & 1\uparrow & \cellcolor{cyan!25}2\nwarrow & \cellcolor{cyan!25}2\leftarrow & \cellcolor{cyan!25}2\leftarrow & \cellcolor{cyan!25}2\leftarrow & 2\leftarrow & 2\leftarrow & 2\leftarrow & 2\leftarrow \\
+\hline
+5 & S & 0 & 0\uparrow & 1\uparrow & 1\uparrow & 2\uparrow & 2\uparrow & 2\uparrow & 2\uparrow & \cellcolor{cyan!25}3\nwarrow & \cellcolor{cyan!25}3\leftarrow & \cellcolor{cyan!25}3\leftarrow & 3\leftarrow \\
+\hline
+6 & D & 0 & 0\uparrow & 1\uparrow & 2\nwarrow & 2\uparrow & 2\uparrow & 2\uparrow & 2\uparrow & 3\uparrow & 3\uparrow & \cellcolor{cyan!25}3\uparrow & 3\uparrow \\
+\hline
+7 & E & 0 & 0\uparrow & 1\uparrow & 2\uparrow & 2\uparrow & 2\uparrow & 2\uparrow & 3\nwarrow & 3\uparrow & 3\uparrow & 3\uparrow & \cellcolor{cyan!25}4\nwarrow \\
+\hline
+8 & R & 0 & 0\uparrow & 1\uparrow & 2\uparrow & 2\uparrow & 2\uparrow & 3\nwarrow & 3\uparrow & 3\uparrow & 3\uparrow & 3\uparrow & \cellcolor{cyan!25}4\uparrow \\
+\hline
+9 & W & 0 & 1\nwarrow & 1\uparrow & 2\uparrow & 2\uparrow & 2\uparrow & 3\uparrow & 3\uparrow & 3\uparrow & 3\uparrow & 4\nwarrow & \cellcolor{cyan!25}4\uparrow \\
+\hline
 \end{array}
 \]
 
-The final entry is $L[9,11] = 4$, so the length of the LCS is 4.
+The final entry is $L[9,11]=4$, so the length of the LCS is $4$.
 
-To recover an actual longest common subsequence, we backtrack from the bottom-right corner of the table.
+To recover an LCS, we backtrack by following the shaded arrows from the bottom-right corner of the table. We start at $(9,11)$, whose arrow is $\uparrow$, so we move up to $(8,11)$, and then up again to $(7,11)$. At $(7,11)$, we see a diagonal arrow $\nwarrow$, so the character $E$ is part of the LCS.
 
-Starting at $(9,11)$, which is the bottom-right corner of the table (row $W$, column $E$), the value is $4$. Since the last characters are $W$ and $E$, they do not match, so we move to a neighboring cell with the same value. Moving left takes us to $(9,10)$, where the characters are $W$ and $W$, so they match. Therefore, $W$ is part of an LCS, and we move diagonally to $(8,9)$.
+We then continue to follow the shaded arrows: diagonally to $(6,10)$, up to $(5,10)$, left to $(5,9)$, and left again to $(5,8)$. Here there is another diagonal arrow, so we know that $S$ is part of the LCS.
 
-At $(8,9)$, the characters are $R$ and $A$, so they do not match. We again move to a neighboring cell with the same value. Continuing this process and recording matched characters gives one longest common subsequence.
+Next we continue to follow the shaded arrows: diagonally to $(4,7)$, left to $(4,6)$, left to $(4,5)$, and left again to $(4,4)$. Here there is another diagonal arrow, so we know that $F$ is part of the LCS.
 
-During backtracking it can happen that the cell above and the cell to the left have the same value. When this occurs, we may move in either direction without changing the LCS length. For example, from a cell with value $3$ we might move left or move up as long as the values remain the same. Each different sequence of choices can lead to a different longest common subsequence.
+We then continue to follow the shaded arrows: diagonally to $(3,3)$, left to $(3,2)$. Here there is another diagonal arrow, so we know that the second $F$ is part of the LCS.
 
-Because of these ties in the table, the LCS is not unique in this example. One valid backtracking path gives $\texttt{FDEW}$, but other valid backtracking choices produce different longest common subsequences of the same length.
+After that, we continue to follow the remaining arrows, but they all lead through cells with value $0$, so they do not contribute any more characters to the LCS. Reading the matched characters in reverse order gives
+\[
+\texttt{FFSE}.
+\]
+This is the LCS indicated by the shaded path in the table.
+
+Because there are cells where the value above and the value to the left are tied, the LCS is not unique in this example. Since we agreed to break ties by choosing the upper cell, the arrows shown in the table follow that convention, but different tie choices can produce different longest common subsequences of the same length.
 
 For example, several longest common subsequences are
 \[
-\texttt{FDEW},\quad \texttt{FDRW},\quad \texttt{FFEW},\quad \texttt{FFRW},\quad \texttt{FFSE},\quad \texttt{FFSW}.
+\texttt{FFSE},\quad \texttt{FFEW},\quad \texttt{FFRW},\quad \texttt{FFSW},\quad \texttt{FDEW},\quad \texttt{FDRW}.
 \]
-Each of these subsequences has length 4.
+Each of these subsequences has length $4$.
 
 \newpage
 \bibliographystyle{unsrt}

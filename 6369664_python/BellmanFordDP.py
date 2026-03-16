@@ -1,3 +1,25 @@
+# Implementation of Bellman-Ford based on the BellmanFordFinal(s)
+# algorithm from the Erickson Algorithms textbook (page 296).
+# I did not follow the algorithm from the slides, but the assignment states
+# to implement the algorithm from the textbook.  I also confirmed in lecture
+# that it was acceptable to use BellmanFordFinal(s) from the textbook.
+#
+# The main loop follows the textbook version:
+#   dist[s] = 0
+#   for every vertex v != s: dist[v] = INF
+#   repeat V−1 times: relax every edge (u -> v)
+#
+# The textbook indicated "BellmanFordFinal is missing only two features of our
+# earlier formulation: It does not maintain predecessor pointers or detect
+# negative cycles. Fortunately, adding those features is straightforward."
+#
+# So, a few additions are included:
+#   - predecessor array (pred) so we can reconstruct shortest paths
+#   - an extra pass after the V−1 iterations to detect negative cycles
+#   - an early stop optimization if a pass makes no updates
+#
+# These changes don't affect the correctness of the algorithm.
+
 import math
 import os
 import sys
